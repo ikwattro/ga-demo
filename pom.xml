@@ -63,6 +63,13 @@
 
         <dependency>
             <groupId>com.graphaware.neo4j</groupId>
+            <artifactId>writer</artifactId>
+            <version>${graphaware.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.graphaware.neo4j</groupId>
             <version>${graphaware.version}</version>
             <artifactId>tests</artifactId>
             <scope>test</scope>
