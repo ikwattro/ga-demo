@@ -68,7 +68,7 @@ public class BatchEngine {
 
     public void doUserBatchProcess(){
         new IterableInputBatchTransactionExecutor<>(database, 1000,
-                new AllNodesWithLabel(database, 1000, Labels.Source),
+                new AllNodesWithLabel(database, 1000, Labels.User),
                 new UnitOfWork<Node>() {
                     @Override
                     public void execute(GraphDatabaseService graphDatabaseService, Node node, int batchNumber, int stepNumber) {
