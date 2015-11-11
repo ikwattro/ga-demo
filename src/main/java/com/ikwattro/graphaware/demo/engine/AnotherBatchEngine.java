@@ -77,7 +77,7 @@ public class AnotherBatchEngine {
         final Node destination = database.findNode(Labels.Destination, Properties.uuid, "destination-1");
         Long start = System.currentTimeMillis();
         new IterableInputBatchTransactionExecutor<>(database, 1000,
-                new AllNodesWithLabel(database, 1000, Labels.Source),
+                new AllNodesWithLabel(database, 1000, Labels.User),
                 new UnitOfWork<Node>() {
                     @Override
                     public void execute(GraphDatabaseService graphDatabaseService, final Node node, int batchNumber, int stepNumber) {

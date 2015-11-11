@@ -20,7 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BatchEngineTest{
 
     private BatchEngine engine;
-    private final int SOURCES = 50000;
+    private AnotherBatchEngine anotherBatchEngine;
+    private final int SOURCES = 50;
 
     private GraphDatabaseService database;
 
@@ -29,6 +30,7 @@ public class BatchEngineTest{
         database = new TestGraphDatabaseFactory().newImpermanentDatabase();
         registerShutdownHook(database);
         engine = new BatchEngine(database);
+        anotherBatchEngine = new AnotherBatchEngine(database);
         try (Transaction tx = database.beginTx()) {
             Node destination = database.createNode(Labels.Destination);
             destination.setProperty(Properties.uuid, "destination-1");
@@ -65,7 +67,7 @@ public class BatchEngineTest{
     @Test
     public void testRelationshipsAreCreated(){
         try (Transaction tx = database.beginTx()){
-            engine.doBatchProcess();
+            engine.doBatchProcessWithFrameworkBatcher();
             Node destination = database.findNode(Labels.Destination, Properties.uuid, "destination-1");
             assertEquals(SOURCES, destination.getDegree());
 
@@ -77,6 +79,17 @@ public class BatchEngineTest{
     public void testRelationshipsAreCreatedInBatch(){
         try (Transaction tx = database.beginTx()){
             engine.doBatchProcessWithFrameworkBatcher();
+            Node destination = database.findNode(Labels.Destination, Properties.uuid, "destination-1");
+            assertEquals(SOURCES, destination.getDegree());
+
+            tx.success();
+        }
+    }
+
+    @Test
+    public void testRelationshipsAreCreatedWithAnotherEngine(){
+        try (Transaction tx = database.beginTx()) {
+            anotherBatchEngine.doBatchProcess();
             Node destination = database.findNode(Labels.Destination, Properties.uuid, "destination-1");
             assertEquals(SOURCES, destination.getDegree());
 
