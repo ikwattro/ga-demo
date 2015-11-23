@@ -1,8 +1,8 @@
 package com.ikwattro.graphaware.demo.writer;
 
 import com.graphaware.test.integration.DatabaseIntegrationTest;
-import com.graphaware.writer.BatchWriter;
-import com.graphaware.writer.DatabaseWriter;
+import com.graphaware.writer.neo4j.BatchWriter;
+import com.graphaware.writer.neo4j.Neo4jWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.neo4j.graphdb.Transaction;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 
 public class BatchWriterTest extends DatabaseIntegrationTest{
 
-    private DatabaseWriter writer;
+    private Neo4jWriter writer;
 
     @Before
     public void setUp() throws Exception{
@@ -32,12 +32,14 @@ public class BatchWriterTest extends DatabaseIntegrationTest{
                 }
             }
         };
+        writer.start();
     }
 
     @Test
-    public void testWriterCanRunInSequence(){
+    public void testWriterCanRunInSequence() throws InterruptedException {
         process();
         process();
+        Thread.sleep(100L);
         int i = 0;
         try (Transaction tx = getDatabase().beginTx()){
             Iterator<Node> it = getDatabase().getAllNodes().iterator();
@@ -53,7 +55,6 @@ public class BatchWriterTest extends DatabaseIntegrationTest{
     }
 
     private void process(){
-        writer.start();
         writer.write(new Runnable() {
             @Override
             public void run() {
@@ -63,6 +64,5 @@ public class BatchWriterTest extends DatabaseIntegrationTest{
             }
         });
 
-        writer.stop();
     }
 }

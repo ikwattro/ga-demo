@@ -4,8 +4,8 @@ package com.ikwattro.graphaware.demo.engine;
 import com.graphaware.tx.executor.batch.IterableInputBatchTransactionExecutor;
 import com.graphaware.tx.executor.batch.UnitOfWork;
 import com.graphaware.tx.executor.input.AllNodesWithLabel;
-import com.graphaware.writer.BatchWriter;
-import com.graphaware.writer.DatabaseWriter;
+import com.graphaware.writer.neo4j.BatchWriter;
+import com.graphaware.writer.neo4j.Neo4jWriter;
 import com.ikwattro.graphaware.demo.domain.Labels;
 import com.ikwattro.graphaware.demo.domain.Properties;
 import com.ikwattro.graphaware.demo.domain.RelationshipTypes;
@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AnotherBatchEngine {
 
     private final GraphDatabaseService database;
-    private final DatabaseWriter writer;
+    private final Neo4jWriter writer;
 
     @Autowired
     public AnotherBatchEngine(GraphDatabaseService database) {

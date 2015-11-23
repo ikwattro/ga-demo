@@ -8,11 +8,17 @@
     <artifactId>demo-module</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>com.graphaware.neo4j</groupId>
+        <artifactId>module-parent</artifactId>
+        <version>2.3.1.36</version>
+    </parent>
+
     <properties>
         <java.version>1.7</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <neo4j.version>2.2.2</neo4j.version>
-        <graphaware.version>2.2.2.33</graphaware.version>
+        <neo4j.version>2.3.1</neo4j.version>
+        <graphaware.version>2.3.1.36</graphaware.version>
         <jackson.version>2.4.4</jackson.version>
         <apache.commons.version>3.4</apache.commons.version>
     </properties>
@@ -56,7 +62,7 @@
 
         <dependency>
             <groupId>com.graphaware.neo4j</groupId>
-            <artifactId>graphaware-framework</artifactId>
+            <artifactId>graphaware-framework-server</artifactId>
             <version>${graphaware.version}</version>
             <scope>provided</scope>
         </dependency>
